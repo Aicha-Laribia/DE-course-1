@@ -8,10 +8,10 @@ from sqlalchemy import create_engine
 
 pg_username = "aicha"
 pg_password = "root"
-pg_host = "localhost"
+pg_host = "pgdatabase"
 pg_port = "5432"
 pg_database = "startups"
-table_name = "startups_data_2024"
+table_name = "startups_morocco_data_2024"
 
 # ==========================================
 # 1. DATA ACQUISITION & INITIAL INSPECTION
@@ -174,9 +174,8 @@ print(df.isna().any())
 engine = create_engine(f'postgresql://{pg_username}:{pg_password}@{pg_host}:{pg_port}/{pg_database}')
 
 # Print target schema structure description
-print("\n--- Target SQL Schema ---")
-print(pd.io.sql.get_schema(df, name='startup_data', con=engine))
+
 
 # Write dataframe to database
-df.to_sql(name=table_name, con=engine, if_exists='fail') 
+df.to_sql(name=table_name, con=engine, if_exists='replace') 
 print(f"\nData successfully exported to database table '{table_name}'.")
